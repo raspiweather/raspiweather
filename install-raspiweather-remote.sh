@@ -51,9 +51,9 @@ DEFAULTNGINX="/etc/nginx/sites-enabled/raspiweather"
 
 ## RELOAD NGINX/PHP
 echo "Restart Nginx ==================================================================="
-/etc/init.d/nginx restart
+service nginx restart
 echo "Restart PHP ====================================================================="
-/etc/init.d/php5-fpm restart
+service php5-fpm restart
 
 ## COPY THE CONFIGURATION FILE INTO THE CORRECT LOCATION
 cp $INSTALL_LOCATION/configs/configuration_remote.php $INSTALL_LOCATION/.
