@@ -33,17 +33,20 @@ Installation for Raspberry Pi
 Also make sure that any other web servers running are either not using port 80 or are disabled and stopped.
 
 1. Install packages
+
 ```
 sudo apt-get update
 sudo apt-get install python-pip sysstat php-pear nginx php5-fpm php5-mysql php5-curl git
 ```
 
 2. Install MySQL
+
 ```
 sudo apt-get install mysql-server
 ```
 
 3. Create the MySQL user for weather
+
 ```
 mysql -uroot -p
 CREATE DATABASE weather;
@@ -52,11 +55,13 @@ FLUSH PRIVILEGES;
 ```
 
 4. Clone the repo
+
 ```
 git clone https://github.com/raspiweather/raspiweather.git ~/raspiweather; cd ~/raspiweather
 ```
 
 5. Modify install script to specify installation location (location could be hardcoded in places)
+
 ```
 nano install-raspiweather.sh
 INSTALL_LOCATION="/apps/weather"
@@ -64,6 +69,7 @@ INSTALL_LOCATION="/apps/weather"
 <b>If you changed the default install directory, perform steps 6 through 9</b><br>
 <b>STEP 7 IS REQUIRED, MAKE SURE YOU UPDATE THE DATABASE PASSWORD TO WHAT WAS CONFIGURED IN STEP 3</b><br>
 6. Edit nginx config
+
 ```
 nano configs/raspiweather.nginx
 ```
@@ -74,6 +80,7 @@ root <INSTALLDIR>/public_html;
 ```
 
 7. Modify configs/configuration.php with the database password from step 3 and installation directory
+
 ```
 nano configuration.php
 ```
@@ -85,6 +92,7 @@ $database['name'] = "weather";
 $weather_folder['install'] = "<INSTALLDIR>";
 ```
 8. Edit sql/000_base_structure.sql to change installation directory
+
 ```
 nano sql/000_base_structure.sql
 INSERT INTO `settings` (`setting_item`, `setting_value`) VALUES
@@ -95,6 +103,7 @@ INSERT INTO `settings` (`setting_item`, `setting_value`) VALUES
 ```
 
 9. Edit configs/weather.ini
+
 ```
 nano configs/weather.ini
 ```
@@ -109,16 +118,19 @@ directory = <INSTALLDIR>/public_html/data
 ```
 
 10. Insert SQL file into database (enter weather user password when prompted)
+
 ```
 mysql -uweather -p weather < sql/000_base_structure.sql
 ```
 
 11. Execute installation script and follow prompts (this can take a few minutes)
+
 ```
 sudo ./install-raspiweather.sh
 ```
 
 12. If you plan to use twitter or SFTP you will need to install the following
+
 <b>TWITTER IS NOT CURRENTLY SUPPORTED IN RASPIWEATHER CONFIGURATION</b>
 ```
 sudo pip install python-twitter oauth2	## TWITTER
@@ -128,11 +140,13 @@ sudo pip install pycrypto paramiko	## SFTP
 ```
 
 13. Test PYWWS
+
 ```
 sudo pywws-testweatherstation
 ```
 
 14. Set station interval to every 5 minutes (if you haven't done this previously)
+
 ```
 sudo pywws-setweatherstation -r 5
 ```
