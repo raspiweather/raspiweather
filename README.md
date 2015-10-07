@@ -34,8 +34,7 @@ Installation for Raspberry Pi
 1. Install packages
 ```
 sudo apt-get update
-sudo apt-get install python-pip sysstat php-pear
-sudo apt-get install nginx php5-fpm php5-mysql php5-curl git
+sudo apt-get install python-pip sysstat php-pear nginx php5-fpm php5-mysql php5-curl git
 ```
 
 2. Install MySQL
