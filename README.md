@@ -30,6 +30,7 @@ HighchartsJS can be found here (http://www.highcharts.com/) for full documentati
 Installation for Raspberry Pi
 =============================
 </b>NOTE!</b> Make sure you have confgured the date and time on your Raspberry Pi properly, and make sure you have expanded the filesystem with raspi-config.
+Also make sure that any other web servers running are either not using port 80 or are disabled and stopped.
 
 1. Install packages
 ```
