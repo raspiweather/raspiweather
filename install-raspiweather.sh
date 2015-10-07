@@ -93,10 +93,6 @@ cd $INSTALL_LOCATION
 rm -rf $RASPIGIT
 chown -R weather:weather $INSTALL_LOCATION
 
-#SET GIT STUFF HERE TO ALLOW GIT PULLS WITHOUT PROMPTING FOR GIT CONFIG
-su - weather -c "git config user.email 'weather@raspiweather.com'"
-su - weather -c "git config user.name 'raspiweather'"
-
 GETCURIP=$(hostname -I)
 echo "Installation complete ==========================================================="
 echo "Navigate to http://$GETCURIP and log in with username:admin and password:password"
