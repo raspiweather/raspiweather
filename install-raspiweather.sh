@@ -75,9 +75,9 @@ pip install -r $RASPIGIT/configs/pip.reqs
 
 ## RELOAD NGINX/PHP
 echo "Restart Nginx ==================================================================="
-/etc/init.d/nginx restart
+service nginx restart
 echo "Restart PHP ====================================================================="
-/etc/init.d/php5-fpm restart
+service php5-fpm restart
 
 ## INSERT CRON ENTRY
 echo "Insert /etc/cron.d/pywws_cron entry ============================================="
