@@ -34,122 +34,123 @@ Also make sure that any other web servers running are either not using port 80 o
 
 1. Install packages
 
-```
-sudo apt-get update
-sudo apt-get install python-pip sysstat php-pear nginx php5-fpm php5-mysql php5-curl git
-```
+  ```
+  sudo apt-get update
+  sudo apt-get install python-pip sysstat php-pear nginx php5-fpm php5-mysql php5-curl git
+  ```
 
 2. Install MySQL
 
-```
-sudo apt-get install mysql-server
-```
+  ```
+  sudo apt-get install mysql-server
+  ```
 
 3. Create the MySQL user for weather
 
-```
-mysql -uroot -p
-CREATE DATABASE weather;
-GRANT ALL ON weather.* TO 'weather'@'localhost' IDENTIFIED BY 'password';
-FLUSH PRIVILEGES;
-```
+  ```
+  mysql -uroot -p
+  CREATE DATABASE weather;
+  GRANT ALL ON weather.* TO 'weather'@'localhost' IDENTIFIED BY 'password';
+  FLUSH PRIVILEGES;
+  \q
+  ```
 
 4. Clone the repo
 
-```
-git clone https://github.com/raspiweather/raspiweather.git ~/raspiweather; cd ~/raspiweather
-```
+  ```
+  git clone https://github.com/raspiweather/raspiweather.git ~/raspiweather; cd ~/raspiweather
+  ```
 
 5. Modify install script to specify installation location (location could be hardcoded in places)
 
-```
-nano install-raspiweather.sh
-INSTALL_LOCATION="/apps/weather"
-```
+  ```
+  nano install-raspiweather.sh
+  INSTALL_LOCATION="/apps/weather"
+  ```
 <b>If you changed the default install directory, perform steps 6 through 9</b><br>
 <b>STEP 7 IS REQUIRED, MAKE SURE YOU UPDATE THE DATABASE PASSWORD TO WHAT WAS CONFIGURED IN STEP 3</b><br>
 6. Edit nginx config
 
-```
-nano configs/raspiweather.nginx
-```
-```
-access_log <INSTALLDIR>/logs/access.log;
-error_log <INSTALLDIR>/logs/error.log;
-root <INSTALLDIR>/public_html;
-```
+  ```
+  nano configs/raspiweather.nginx
+  ```
+  ```
+  access_log <INSTALLDIR>/logs/access.log;
+  error_log <INSTALLDIR>/logs/error.log;
+  root <INSTALLDIR>/public_html;
+  ```
 
 7. Modify configs/configuration.php with the database password from step 3 and installation directory
 
-```
-nano configuration.php
-```
-```
-$database['host'] = "localhost";
-$database['user'] = "weather";
-$database['pass'] = "<DBUSERPASS>";
-$database['name'] = "weather";
-$weather_folder['install'] = "<INSTALLDIR>";
-```
+  ```
+  nano configuration.php
+  ```
+  ```
+  $database['host'] = "localhost";
+  $database['user'] = "weather";
+  $database['pass'] = "<DBUSERPASS>";
+  $database['name'] = "weather";
+  $weather_folder['install'] = "<INSTALLDIR>";
+  ```
 8. Edit sql/000_base_structure.sql to change installation directory
 
-```
-nano sql/000_base_structure.sql
-INSERT INTO `settings` (`setting_item`, `setting_value`) VALUES
-('templates', '<INSTALLDIR>/templates'),
-('user_calib', '<INSTALLDIR>/calib'),
-('work', '/tmp/weather'),
-('local_files', '<INSTALLDIR>/public_html/data');
-```
+  ```
+  nano sql/000_base_structure.sql
+  INSERT INTO `settings` (`setting_item`, `setting_value`) VALUES
+  ('templates', '<INSTALLDIR>/templates'),
+  ('user_calib', '<INSTALLDIR>/calib'),
+  ('work', '/tmp/weather'),
+  ('local_files', '<INSTALLDIR>/public_html/data');
+  ```
 
 9. Edit configs/weather.ini
 
-```
-nano configs/weather.ini
-```
-```
-[paths]
-templates = <INSTALLDIR>/templates
-work = /tmp/weather
-local_files = <INSTALLDIR>/public_html/data
-[ftp]
-local site = True
-directory = <INSTALLDIR>/public_html/data
-```
+  ```
+  nano configs/weather.ini
+  ```
+  ```
+  [paths]
+  templates = <INSTALLDIR>/templates
+  work = /tmp/weather
+  local_files = <INSTALLDIR>/public_html/data
+  [ftp]
+  local site = True
+  directory = <INSTALLDIR>/public_html/data
+  ```
 
 10. Insert SQL file into database (enter weather user password when prompted)
 
-```
-mysql -uweather -p weather < sql/000_base_structure.sql
-```
+  ```
+  mysql -uweather -p weather < sql/000_base_structure.sql
+  ```
 
 11. Execute installation script and follow prompts (this can take a few minutes)
 
-```
-sudo ./install-raspiweather.sh
-```
+  ```
+  sudo ./install-raspiweather.sh
+  ```
 
 12. If you plan to use twitter or SFTP you will need to install the following
 
 <b>TWITTER IS NOT CURRENTLY SUPPORTED IN RASPIWEATHER CONFIGURATION</b>
-```
-sudo pip install python-twitter oauth2	## TWITTER
-```
-```
-sudo pip install pycrypto paramiko	## SFTP
-```
+  ```
+  sudo pip install python-twitter oauth2	## TWITTER
+  ```
+  ```
+  sudo pip install pycrypto paramiko	## SFTP
+  ```
 
 13. Test PYWWS
 
-```
-sudo pywws-testweatherstation
-```
+  ```
+  sudo pywws-testweatherstation
+  ```
 
 14. Set station interval to every 5 minutes (if you haven't done this previously)
 
-```
-sudo pywws-setweatherstation -r 5
-```
+  ```
+  sudo pywws-setweatherstation -r 5
+  ```
 
 15. Unplug and replug the weather station in.
 
@@ -160,46 +161,46 @@ Installation for Remote Sites / Host Your Own
 =============================================
 
 1. Install packages
-```
-sudo apt-get update
-sudo apt-get install php-pear nginx php5-fpm php5-curl git
-```
+  ```
+  sudo apt-get update
+  sudo apt-get install php-pear nginx php5-fpm php5-curl git
+  ```
 
 2. Clone the repo
-```
-git clone https://github.com/raspiweather/raspiweather.git ~/raspiweather; cd ~/raspiweather
-```
+  ```
+  git clone https://github.com/raspiweather/raspiweather.git ~/raspiweather; cd ~/raspiweather
+  ```
 
 3. Modify install script to specify installation location (location could be hardcoded in places)
-```
-nano install-raspiweather-remote.sh
-INSTALL_LOCATION="/apps/weather"
-```
+  ```
+  nano install-raspiweather-remote.sh
+  INSTALL_LOCATION="/apps/weather"
+  ```
 <b>If you changed the default install directory, perform steps 6 through 9 (MAKE SURE YOU UPDATE THE DATABASE PASSWORD IN STEP 7)</b>
 
 4. Edit nginx config
-```
-nano configs/raspiweather.nginx
-```
-```
-access_log <INSTALLDIR>/logs/access.log;
-error_log <INSTALLDIR>/logs/error.log;
-root <INSTALLDIR>/public_html;
-```
+  ```
+  nano configs/raspiweather.nginx
+  ```
+  ```
+  access_log <INSTALLDIR>/logs/access.log;
+  error_log <INSTALLDIR>/logs/error.log;
+  root <INSTALLDIR>/public_html;
+  ```
 
 5. Execute installation script and follow prompts
-```
-sudo ./install-raspiweather-remote.sh
-```
+  ```
+  sudo ./install-raspiweather-remote.sh
+  ```
 
 6. Modify ./configuration.php with your own API key and installation directory
-```
-nano configuration.php
-```
-```
-$weather_folder['install'] = "<INSTALLDIR>";
-$remote['api_key'] = 'putyourownapikeyhere';
-```
+  ```
+  nano configuration.php
+  ```
+  ```
+  $weather_folder['install'] = "<INSTALLDIR>";
+  $remote['api_key'] = 'putyourownapikeyhere';
+  ```
 
 7. Done
 
