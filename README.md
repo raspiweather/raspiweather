@@ -4,6 +4,9 @@ RasPiWeather is a webfront end for PYWWS weather station software written by Jim
 There aren't many nice looking interactive front ends for PYWWS template outputs. I set about creating my own, hopefully you like it too.<br>
 Some features haven't been fully implemented yet, as I don't really use those features myself
 
+Visit the website and sign up for an account to send your data to
+http://www.raspiweather.com
+
 Current Features
 ========
 <b>Dashboard</b> - The main page presents a dashboard, which is the latest data pulled from the weather station.
