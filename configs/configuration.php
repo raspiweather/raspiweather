@@ -2,7 +2,7 @@
 #SET UP YOUR DATABASE INFORMATION HERE
 $database['host'] = "localhost";
 $database['user'] = "weather";
-$database['pass'] = "weather";
+$database['pass'] = "password";
 $database['name'] = "weather";
 #EDIT FILE LOCATIONS HERE
 $weather_folder['install'] = "/apps/weather";
