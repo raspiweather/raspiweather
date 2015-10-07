@@ -61,7 +61,7 @@ nano install-raspiweather.sh
 INSTALL_LOCATION="/apps/weather"
 ```
 <b>If you changed the default install directory, perform steps 6 through 9</b><br>
-<b>STEP 7 IS REQUIRED, MAKE SURE YOU UPDATE THE DATABASE PASSWORD TO WHAT WAS CONFIGURED IN STEP 3</b>
+<b>STEP 7 IS REQUIRED, MAKE SURE YOU UPDATE THE DATABASE PASSWORD TO WHAT WAS CONFIGURED IN STEP 3</b><br>
 6. Edit nginx config
 ```
 nano configs/raspiweather.nginx
@@ -112,7 +112,7 @@ directory = <INSTALLDIR>/public_html/data
 mysql -uweather -p weather < sql/000_base_structure.sql
 ```
 
-11. Execute installation script and follow prompts
+11. Execute installation script and follow prompts (this can take a few minutes)
 ```
 sudo ./install-raspiweather.sh
 ```
