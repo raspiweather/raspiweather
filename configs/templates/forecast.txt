@@ -1,0 +1,2 @@
+#timezone local#
+{"icon":"#calc "ZambrettiCode(params, data)" "%s"#","forecast":"#calc "Zambretti(params, data)" "%s."#","time":"Computed at #idx "%H:%M %Z"#"}

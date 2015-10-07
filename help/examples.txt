@@ -1,0 +1,304 @@
+LAST 7 DAYS OVERVIEW
+====================
+<table class="table table-hover table-striped table-bordered">
+<thead>
+  <tr>
+    <th>24 hours ending</th>
+    <th>Temp Day Max</th>
+    <th>Temp Night Min</th>
+    <th>Wind Dir</th>
+    <th>Wind Ave</th>
+    <th>Wind gust</th>  
+    <th>Rainfall</th>
+  </tr>
+</thead>
+<tbody>
+#timezone local#
+#roundtime True#
+#daily#
+#jump -7#
+#loop 7#
+  <tr>
+    <td>#idx "%Y/%m/%d"#</td>
+    <td>#temp_out_max "%.1f<small>&deg;C</small>"#</td>
+    <td>#temp_out_min "%.1f<small>&deg;C</small>"#</td>
+    <td class="hidden-xs">#wind_dir "%s" "-" "wind_dir_text[x]"#</td>
+    <td>#wind_ave "%.0f <small>mph</small>" "" "wind_mph(x)"#</td>
+    <td class="hidden-xs">#wind_gust "%.0f <small>mph</small>" "" "wind_mph(x)"#</td>
+    <td>#rain "%0.1f <small>mm</small>"#</td>
+  </tr>
+#jump 1#
+#endloop#
+</tbody>
+</table>
+
+
+LAST 12 MONTHS OVERVIEW
+=======================
+<table class="table table-hover table-striped table-bordered">
+  <tr>
+    <th>Month</th>
+    <th>Day High</th>
+    <th class="hidden-xs">Day Ave</th>
+    <th>Day Low</th>
+    <th class="hidden-xs">Night High</th>
+    <th class="hidden-xs">Night Ave</th>
+    <th>Night Low</th>
+    <th >Rainfall</th>
+  </tr>
+#timezone local#
+#monthly#
+#jump -12#
+#loop 12#
+  <tr>
+    <td>#start "%B %Y"#</td>
+    <td>#temp_out_max_hi "%.1f <small>�C</small>"#</td>
+    <td class="hidden-xs">#temp_out_max_ave "%.1f <small>�C</small>"#</td>
+    <td>#temp_out_max_lo "%.1f <small>�C</small>"#</td>
+    <td class="hidden-xs">#temp_out_min_hi "%.1f <small>�C</small>"#</td>
+    <td class="hidden-xs">#temp_out_min_ave "%.1f <small>�C</small>"#</td>
+    <td>#temp_out_min_lo "%.1f <small>�C</small>"#</td>
+    <td>#rain "%0.1f <small>mm</small>"#</td>
+  </tr>
+#jump 1#
+#endloop#
+</table>
+
+
+LAST 24 HOURS RAIN / PRESSURE
+=============================
+#timezone local#
+#roundtime True#
+#hourly#
+{"colors":[{"color":"123EAB"},{"color":"FFAB00"}],
+"charttype":{"polar":"false","type":"spline"},
+"options":{
+"stacking":"",
+"labels":"",
+"chartheight":"350px",
+"pointpadding":0.2,
+"yaxis":[{"title":"Rainfall (mm)","opposite":"true"},{"title":"Pressure (hPa)"}],
+"seriestype":[{"name":"Rainfall","type":"column","yaxis":1,"valuesuffix":"mm"},{"name":"Pressure","type":"spline","valuesuffix":"hPa"}]},
+"values":[
+#jump -25#
+#loop 24#
+{"time":"#idx "%H%M"#","Rainfall":#rain "%0.1f"#,"Pressure":#rel_pressure "%.1f"#},
+#jump 1#
+#endloop#
+{"time":"#idx "%H%M"#","Rainfall":#rain "%0.1f"#,"Pressure":#rel_pressure "%.1f"#}
+]}
+
+LAST HOUR OVERVIEW
+==================
+<table class="table table-hover table-striped table-bordered">
+<thead>
+  <tr>
+    <th>Time</th>
+    <th>Temp Out</th>
+    <th class="hidden-xs">Temp In</th>
+    <th>Feels like</th>
+    <th class="hidden-xs">Humidity</th>
+    <th class="hidden-xs">Wind Dir</th>
+    <th>Wind Ave</th>
+    <th class="hidden-xs">Wind Gust</th>
+    <th>Rain</th>
+    <th class="hidden-xs">Pressure</th>
+  </tr>
+</thead>
+<tbody>
+#raw#
+#timezone local#
+#roundtime True#
+#jump -1#
+#loop 12#
+<tr>
+<td>#idx "%H:%M <small>%Z</small>"#</td>
+<td>#temp_out "%.1f<small>�C</small>" "-"#</td>
+<td class="hidden-xs">#temp_in "%.1f<small>�C</small>" "-"#</td>
+<td>#calc "apparent_temp(data['temp_out'], data['hum_out'], data['wind_ave'])" "%.1f <small>�C</small>"#</td>
+<td class="hidden-xs">#hum_out "%d<small>%%</small>"#</td>
+<td class="hidden-xs">#wind_dir "%s " "-" "wind_dir_text[x]"#</td>
+<td>#wind_ave "%.0f <small>mph</small>" "-" "wind_mph(x)"#</td>
+<td class="hidden-xs">#wind_gust "%.0f <small>mph</small>" "" "wind_mph(x)"#</td>
+<td>#calc "prevdata['rain'] - data['rain']" "%.1f <small>mm</small>"#</td>
+<td class="hidden-xs">#rel_pressure "%.0f <small>hPa</small>"#</td>
+</tr>
+#jump -1#
+#endloop#
+</tbody>
+</table>
+
+
+LAST 24 HOURS WIND DIRECTION ROSE
+=================================
+#timezone local#
+#roundtime True#
+#hourly#
+{"colors":[{"color":"001f3f"},{"color":"0073b7"},{"color":"f39c12"},{"color":"00c0ef"},{"color":"3d9970"},{"color":"39cccc"},{"color":"00a65a"}],
+"charttype":{"polar":"true","type":"column"},
+"options":{
+"stacking":"normal",
+"labels":"\\u00B0",
+"valuesuffix":"%",
+"chartheight":"600px",
+"pointpadding":0,
+"yaxis":[{"title":""}],
+"seriestype":[{"valuesuffix":"\\u00B0"}]
+},
+"thresholds":[
+{"thresh":0.5},{"thresh":3.5},{"thresh":7.5},{"thresh":12.5},{"thresh":18.5},{"thresh":24.5},{"thresh":31.5}],
+"windvalues":[
+#jump -25#
+#loop 24#
+{"dir":"#wind_dir "%s" "-" "wind_dir_text[x]"#","value":#wind_ave "%.1f" "" "wind_kmph(x)"#},
+#jump 1#
+#endloop#
+]}
+
+
+LAST 24 HOURS TEMPERATURES
+==========================
+#timezone local#
+#roundtime True#
+#hourly#
+{"colors":[{"color":"0073b7"},{"color":"3d9970"},{"color":"3d39a0"}],
+"charttype":{"polar":"false","type":"spline"},
+"options":{
+"stacking":"",
+"labels":"",
+"chartheight":"350px",
+"pointpadding":0.2,
+"yaxis":[{"title":"Temperature \\u00B0C"}],
+"seriestype":[{"name":"Temp In","type":"spline","valuesuffix":"\\u00B0C"},{"name":"Temp Out","type":"spline","yaxis":1,"valuesuffix":"\\u00B0C"},{"name":"Apparent Temp","type":"spline","valuesuffix":"\\u00B0C"}]},
+"values":[
+#jump -25#
+#loop 24#
+{"time":"#idx "%H%M"#","Temp In":#temp_in "%.1f" "-"#,"Temp Out":#temp_out "%.1f" "-"#,"Apparent Temp":#calc "apparent_temp(data['temp_out'], data['hum_out'], data['wind_ave'])" "%.1f" "-"#},
+#jump 1#
+#endloop#
+{"time":"#idx "%H%M"#","Temp In":#temp_in "%.1f" "-"#,"Temp Out":#temp_out "%.1f" "-"#,"Apparent Temp":#calc "apparent_temp(data['temp_out'], data['hum_out'], data['wind_ave'])" "%.1f" "-"#}
+]}
+
+
+LAST 24 HOURS WIND SPEEDS
+=========================
+#timezone local#
+#roundtime True#
+#hourly#
+{"colors":[{"color":"0073b7"},{"color":"3d9970"},{"color":"3d39a0"}],
+"charttype":{"polar":"false","type":"spline"},
+"options":{
+"stacking":"",
+"labels":"",
+"chartheight":"350px",
+"pointpadding":0.2,
+"yaxis":[{"title":"Speed (KPH)"}],
+"seriestype":[{"name":"Wind Average","type":"spline","valuesuffix":"KPH"},{"name":"Wind Gust","type":"spline","yaxis":1,"valuesuffix":"KPH"}]},
+"values":[
+#jump -25#
+#loop 24#
+{"time":"#idx "%H%M"#","Wind Average":#wind_ave "%.1f" "" "wind_kmph(x)"#,"Wind Gust":#wind_gust "%.1f" "" "wind_kmph(x)"#},
+#jump 1#
+#endloop#
+{"time":"#idx "%H%M"#","Wind Average":#wind_ave "%.1f" "" "wind_kmph(x)"#,"Wind Gust":#wind_gust "%.1f" "" "wind_kmph(x)"#}
+]}
+
+
+LAST 6 HOURS
+============
+<table class="table table-hover table-striped table-bordered">
+<thead>
+  <tr>
+    <th>Time</th>
+    <th>Temp Out</th>
+    <th class="hidden-xs">Temp In</th>
+    <th>Feels like</th>
+    <th class="hidden-xs">Humidity</th>
+    <th class="hidden-xs">Wind Dir</th>
+    <th>Wind Ave</th>
+    <th class="hidden-xs">Wind Gust</th>
+    <th>Rain</th>
+    <th class="hidden-xs">Pressure</th>
+  </tr>
+</thead>
+<tbody>
+#timezone local#
+#roundtime True#
+#hourly#
+#jump -1#
+#loop 6#
+<tr>
+<td>#idx "%H:%M <small>%Z</small>"#</td>
+<td>#temp_out "%.1f<small>�C</small>" "-"#</td>
+<td class="hidden-xs">#temp_in "%.1f<small>�C</small>" "-"#</td>
+<td>#calc "apparent_temp(data['temp_out'], data['hum_out'], data['wind_ave'])" "%.1f <small>�C</small>"#</td>
+<td class="hidden-xs">#hum_out "%d<small>%%</small>"#</td>
+<td class="hidden-xs">#wind_dir "%s " "-" "wind_dir_text[x]"#</td>
+<td>#wind_ave "%.0f <small>mph</small>" "-" "wind_mph(x)"#</td>
+<td class="hidden-xs">#wind_gust "%.0f <small>mph</small>" "" "wind_mph(x)"#</td>
+<td>#calc "prevdata['rain'] - data['rain']" "%.1f <small>mm</small>"#</td>
+<td class="hidden-xs">#rel_pressure "%.0f <small>hPa</small>"#</td>
+</tr>
+#jump -1#
+#endloop#
+</tbody>
+</table>
+
+
+LAST 24 HOURS OVERVIEW
+======================
+#daily#
+#timezone local#
+#roundtime True#
+<table class="table table-hover table-striped table-bordered">
+#jump -1#
+#loop 2#
+  <tr>
+    <th colspan="2" class="left">
+      #start "From %H:%M %Z on %d %b to" "24 hours ending" "[x, None][loop_count == 2]"#
+#idx " %H:%M <small>%Z</small> on %d %b %Y"# 
+    </th>
+    <th colspan="2">Date &amp; time</th>
+  </tr>
+  <tr>
+    <th align="right">Daytime max temp</th>
+    <td>#temp_out_max "%.1f<small>&deg;C</small>"#</td>
+    <td>#temp_out_max_t "%Y/%m/%d</td><td>%H:%M <small>%Z</small>"#</td>
+  </tr>
+  <tr>
+    <th align="right">Night min temp</th>
+    <td>#temp_out_min "%.1f<small>&deg;C</small>"#</td>
+    <td>#temp_out_min_t "%Y/%m/%d</td><td>%H:%M <small>%Z</small>"#</td>
+  </tr>
+  <tr>
+    <th align="right">Total rainfall</th>
+    <td>#rain "%.1f <small>mm</small>"#</td>
+    <td colspan="2"></td>
+  </tr>
+  <tr>
+    <th align="right">Average wind speed</th>
+    <td>#wind_ave "%.0f <small>mph</small>" "-" "wind_mph(x)"#</td>
+    <td colspan="2"></td>
+  </tr>
+  <tr>
+    <th align="right">Highest gust speed</th>
+    <td>#wind_gust "%.0f <small>mph</small>" "-" "wind_mph(x)"#</td>
+    <td>#wind_gust_t "%Y/%m/%d</td><td>%H:%M <small>%Z</small>"#</td>
+  </tr>
+#idx "  <tr><th colspan=\"4\">&nbsp;</th></tr>" "" "[x, None][loop_count==1]"#
+#jump 1#
+#endloop#
+</table>
+
+
+FORECAST
+========
+{"icon":"#calc "ZambrettiCode(params, data)" "%s"#","forecast":"#calc "Zambretti(params, data)" "%s."#","time":"Computed at #idx "Computed at %H:%M %Z"#"}
+
+
+WIDGETS
+=======
+#raw#
+#timezone local#
+#roundtime True#
+{"time":"#idx "%d-%b-%Y %H:%M "#","widgets":{"temp_out":"#temp_out "%.1f" "-"#","temp_in":"#temp_in "%.1f" "-"#","apparent_temp":"#calc "apparent_temp(data['temp_out'], data['hum_out'], data['wind_ave'])" "%.1f" "-"#","hum_out":"#hum_out "%.1f" "-"#","hum_in":"#hum_in "%.1f" "-"#","abs_pressure":"#abs_pressure "%.1f" "-"#","wind_ave":"#wind_ave "%.1f" "" "wind_kmph(x)"#","wind_gust":"#wind_gust "%.1f" "" "wind_kmph(x)"#","wind_dir":"#wind_dir "%s " "-" "wind_dir_text[x]"#","rain":"#rain "%.1f" "-"#"}}

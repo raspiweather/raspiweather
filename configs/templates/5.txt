@@ -1,0 +1,24 @@
+#timezone local#
+#roundtime True#
+#hourly#
+{"colors":[{"color":"001f3f"},{"color":"0073b7"},{"color":"f39c12"},{"color":"00c0ef"},{"color":"3d9970"},{"color":"39cccc"},{"color":"00a65a"}],
+"charttype":{"polar":"true","type":"column"},
+"options":{
+"stacking":"normal",
+"labels":"\\u00B0",
+"valuesuffix":"%",
+"chartheight":"600px",
+"pointpadding":0,
+"yaxis":[{"title":""}],
+"seriestype":[{"valuesuffix":"\\u00B0"}]
+},
+"thresholds":[
+{"thresh":0.5},{"thresh":3.5},{"thresh":7.5},{"thresh":12.5},{"thresh":18.5},{"thresh":24.5},{"thresh":31.5}],
+"windvalues":[
+#jump 0#
+#loop 24#
+{"dir":"#wind_dir "%s" "-" "winddir_text(x)"#","value":#wind_ave "%.1f" "" "wind_kmph(x)"#},
+#jump -1#
+#endloop#
+{"dir":"#wind_dir "%s" "-" "winddir_text(x)"#","value":#wind_ave "%.1f" "" "wind_kmph(x)"#}
+]}

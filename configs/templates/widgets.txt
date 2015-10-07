@@ -1,0 +1,4 @@
+#raw#
+#timezone local#
+#roundtime True#
+{"time":"#idx "%d-%b-%Y %H:%M "#","widgets":{"temp_out":"#temp_out "%.1f" "-"#","temp_in":"#temp_in "%.1f" "-"#","apparent_temp":"#calc "apparent_temp(data['temp_out'], data['hum_out'], data['wind_ave'])" "%.1f" "-"#","hum_out":"#hum_out "%.1f" "-"#","hum_in":"#hum_in "%.1f" "-"#","rel_pressure":"#rel_pressure "%.1f" "-"#","wind_ave":"#wind_ave "%.1f" "" "wind_kmph(x)"#","wind_gust":"#wind_gust "%.1f" "" "wind_kmph(x)"#","wind_dir":"#wind_dir "%s " "-" "winddir_text(x)"#","rain":"#calc "rain_hour(data)" "%.1f" "-"#"}}

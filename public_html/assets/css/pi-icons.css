@@ -1,0 +1,4 @@
+.icon-percent::before {
+    content: '%';
+    font-weight: bold;
+}

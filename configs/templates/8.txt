@@ -1,0 +1,37 @@
+<table class="table table-hover table-striped table-bordered">
+<thead>
+  <tr>
+    <th>Time</th>
+    <th>Temp Out</th>
+    <th class="hidden-xs">Temp In</th>
+    <th>Feels like</th>
+    <th class="hidden-xs">Humidity</th>
+    <th class="hidden-xs">Wind Dir</th>
+    <th>Wind Ave</th>
+    <th class="hidden-xs">Wind Gust</th>
+    <th>Rain</th>
+    <th class="hidden-xs">Pressure</th>
+  </tr>
+</thead>
+<tbody>
+#timezone local#
+#roundtime True#
+#hourly#
+#jump 0#
+#loop 6#
+<tr>
+<td>#idx "%H:%M <small>%Z</small>"#</td>
+<td>#temp_out "%.1f<small>°C</small>" "-"#</td>
+<td class="hidden-xs">#temp_in "%.1f<small>°C</small>" "-"#</td>
+<td>#calc "apparent_temp(data['temp_out'], data['hum_out'], data['wind_ave'])" "%.1f <small>°C</small>"#</td>
+<td class="hidden-xs">#hum_out "%d<small>%%</small>"#</td>
+<td class="hidden-xs">#wind_dir "%s " "-" "winddir_text(x)"#</td>
+<td>#wind_ave "%.0f <small>mph</small>" "-" "wind_mph(x)"#</td>
+<td class="hidden-xs">#wind_gust "%.0f <small>mph</small>" "" "wind_mph(x)"#</td>
+<td>#calc "prevdata['rain'] - data['rain']" "%.1f <small>mm</small>"#</td>
+<td class="hidden-xs">#rel_pressure "%.0f <small>hPa</small>"#</td>
+</tr>
+#jump -1#
+#endloop#
+</tbody>
+</table>

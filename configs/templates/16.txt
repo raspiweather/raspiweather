@@ -1,0 +1,22 @@
+#timezone local#
+#roundtime True#
+#daily#
+{"colors":[{"color":"1fdbdb"},{"color":"db1f1f"}],
+"charttype":{"polar":"false","type":"column"},
+"options":{
+"stacking":"",
+"labels":"",
+"chartheight":"350px",
+"pointpadding":0.2,
+"yaxis":[{"title":"Temperature \\u00B0C"}],
+"xaxis":[{"title":"Date"}],
+"seriestype":[{"name":"Temp Out Min","valuesuffix":"\\u00B0C"},{"name":"Temp Out Max","valuesuffix":"\\u00B0C"}]},
+"values":[
+#jump 0#
+#loop 28#
+{"time":"#idx "%Y/%m/%d"#","Temp Out Min":#temp_out_min "%.1f"#,"Temp Out Max":#temp_out_max "%.1f"#},
+#jump -1#
+#endloop#
+{"time":"#idx "%Y/%m/%d"#","Temp Out Min":#temp_out_min "%.1f"#,"Temp Out Max":#temp_out_max "%.1f"#}
+]}
+

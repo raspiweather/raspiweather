@@ -1,0 +1,20 @@
+#timezone local#
+#roundtime True#
+#hourly#
+{"colors":[{"color":"123EAB"},{"color":"FFAB00"}],
+"charttype":{"polar":"false","type":"spline"},
+"options":{
+"stacking":"",
+"labels":"",
+"chartheight":"350px",
+"pointpadding":0.2,
+"yaxis":[{"title":"Rainfall (mm)","opposite":"true"},{"title":"Pressure (hPa)"}],
+"seriestype":[{"name":"Rainfall","type":"column","valuesuffix":"mm"},{"name":"Pressure","type":"spline","valuesuffix":"hPa","yaxis":1}]},
+"values":[
+#jump 0#
+#loop 24#
+{"time":"#idx "%H%M %d/%b"#","Rainfall":#rain "%0.1f"#,"Pressure":#rel_pressure "%.1f"#},
+#jump -1#
+#endloop#
+{"time":"#idx "%H%M %d/%b"#","Rainfall":#rain "%0.1f"#,"Pressure":#rel_pressure "%.1f"#}
+]}

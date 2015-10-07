@@ -1,0 +1,42 @@
+#daily#
+#timezone local#
+#roundtime True#
+<table class="table table-hover table-striped table-bordered">
+#jump 0#
+#loop 2#
+  <tr>
+    <th colspan="2" class="left">
+      #start "From %H:%M %Z on %d %b to" "24 hours ending" "[x, None][loop_count == 2]"#
+#idx " %H:%M <small>%Z</small> on %d %b %Y"# 
+    </th>
+    <th colspan="2">Date & time</th>
+  </tr>
+  <tr>
+    <th align="right">Daytime max temp</th>
+    <td>#temp_out_max "%.1f<small>°C</small>"#</td>
+    <td>#temp_out_max_t "%Y/%m/%d</td><td>%H:%M <small>%Z</small>"#</td>
+  </tr>
+  <tr>
+    <th align="right">Night min temp</th>
+    <td>#temp_out_min "%.1f<small>°C</small>"#</td>
+    <td>#temp_out_min_t "%Y/%m/%d</td><td>%H:%M <small>%Z</small>"#</td>
+  </tr>
+  <tr>
+    <th align="right">Total rainfall</th>
+    <td>#rain "%.1f <small>mm</small>"#</td>
+    <td colspan="2"></td>
+  </tr>
+  <tr>
+    <th align="right">Average wind speed</th>
+    <td>#wind_ave "%.0f <small>mph</small>" "-" "wind_mph(x)"#</td>
+    <td colspan="2"></td>
+  </tr>
+  <tr>
+    <th align="right">Highest gust speed</th>
+    <td>#wind_gust "%.0f <small>mph</small>" "-" "wind_mph(x)"#</td>
+    <td>#wind_gust_t "%Y/%m/%d</td><td>%H:%M <small>%Z</small>"#</td>
+  </tr>
+#idx "  <tr><th colspan=\"4\"> </th></tr>" "" "[x, None][loop_count==1]"#
+#jump -1#
+#endloop#
+</table>

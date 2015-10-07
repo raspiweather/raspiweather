@@ -1,0 +1,130 @@
+#!/bin/bash
+
+#
+# THIS CRON RUNS EVERY MINUTE AND SCHEDULES UPDATES FOR DIFFERENT THINGS
+#
+
+# WEATHER_LOCATION specifies the directory where raspiweather has been installed
+WEATHER_LOCATION=$(cat /apps/weather/configuration.php | grep -w "\$weather_folder\['install'\] =" | awk '{print $3}' | sed 's/^.\(.*\).$/\1/' | sed s'/.$//')
+DBPASSWD=$(cat /apps/weather/configuration.php | grep -w "\$database\['pass'\] =" | awk '{print $3}' | sed 's/^.\(.*\).$/\1/' | sed s'/.$//')
+
+while read line
+do
+    PYWWSARRAY+=("$line")
+done < <(mysql -uweather -p$DBPASSWD -ss -B weather -e "SELECT * FROM cron")
+
+PIRESOURCE=`echo ${PYWWSARRAY[0]} | awk '{print $3}'`
+PYWWSSTATUS=`echo ${PYWWSARRAY[1]} | awk '{print $3}'`
+PYWWSCRASH=`echo ${PYWWSARRAY[2]} | awk '{print $3}'`
+PYWWSSERVICE=`echo ${PYWWSARRAY[3]} | awk '{print $3}'`
+PYWWSREMOTE=`echo ${PYWWSARRAY[4]} | awk '{print $3}'`
+
+
+PYWWSPID=/var/run/pywws.pid
+WEATHERDATA=$WEATHER_LOCATION/weather_data/
+PYWWSLOG=$WEATHER_LOCATION/logs/live_logger.log
+
+CRONDATE=`date +"%Y-%m-%d %H:%M:%S"`
+
+#
+# SCRIPT TO REPROCESS DATA AFTER UPLOAD
+#
+
+PYWWSCRASHSTATUS=$(cat $WEATHER_LOCATION/pi-scripts/status.dat | grep -Po '"state":.*?[^\\]"' | grep -Po ':.*?[^\\]"' | awk '{split($0,a,":"); print a[2]}' | sed -e 's/^"//'  -e 's/"$//')
+
+if [[ $PYWWSSERVICE == "reprocess" ]]
+then
+  # STOP BEFORE PROCESSING
+  mysql -uweather -p$DBPASSWD -ss weather -e "UPDATE cron SET cron_value='no',cron_run='$CRONDATE' WHERE cron_name='pywws_service'"
+  if [[ $PYWWSCRASHSTATUS == "running" ]]
+  then
+    echo `date +"%Y-%m-%d %H:%M:%S"`":Stopping PYWWS for reprocessing data" >> $PYWWSLOG
+    /usr/local/bin/pywws-livelog-daemon -p $PYWWSPID $WEATHERDATA $PYWWSLOG stop &
+  fi
+  # CHOWN FILES FOR GOOD MEASURE
+  chown -R weather:weather $WEATHERDATA
+  echo `date +"%Y-%m-%d %H:%M:%S"`":Commence data reprocess" >> $PYWWSLOG
+  /usr/local/bin/pywws-reprocess $WEATHERDATA
+  echo `date +"%Y-%m-%d %H:%M:%S"`":Data reprocessing complete" >> $PYWWSLOG
+  /usr/local/bin/pywws-livelog-daemon -p $PYWWSPID $WEATHERDATA $PYWWSLOG start &
+  echo `date +"%Y-%m-%d %H:%M:%S"`":Starting PYWWS after processing" >> $PYWWSLOG
+fi
+
+#
+# SCRIPT TO UPDATE SYSTEM RESOURCES
+#
+if [[ $PIRESOURCE == "yes" ]]
+then
+  mysql -uweather -p$DBPASSWD -ss weather -e "UPDATE cron SET cron_run='$CRONDATE' WHERE cron_name='pi_resources'"
+  sudo $WEATHER_LOCATION/pi-scripts/resources > $WEATHER_LOCATION/pi-scripts/resource.dat
+fi
+
+#
+# SCRIPTS FOR START/RESTART/STOP PYWWS
+#
+if [[ $PYWWSSERVICE == "start" ]]
+then
+  mysql -uweather -p$DBPASSWD -ss weather -e "UPDATE cron SET cron_value='no',cron_run='$CRONDATE' WHERE cron_name='pywws_service'"
+  /usr/local/bin/pywws-livelog-daemon -p $PYWWSPID $WEATHERDATA $PYWWSLOG start &
+  echo `date +"%Y-%m-%d %H:%M:%S"`":Starting PYWWS" >> $PYWWSLOG
+fi
+
+if [[ $PYWWSSERVICE == "restart" ]]
+then
+  mysql -uweather -p$DBPASSWD -ss weather -e "UPDATE cron SET cron_value='no',cron_run='$CRONDATE' WHERE cron_name='pywws_service'"
+  /usr/local/bin/pywws-livelog-daemon -p $PYWWSPID $WEATHERDATA $PYWWSLOG restart &
+  echo `date +"%Y-%m-%d %H:%M:%S"`":Restarting PYWWS" >> $PYWWSLOG
+fi
+
+if [[ $PYWWSSERVICE == "stop" ]]
+then
+  mysql -uweather -p$DBPASSWD -ss weather -e "UPDATE cron SET cron_value='no',cron_run='$CRONDATE' WHERE cron_name='pywws_service'"
+  /usr/local/bin/pywws-livelog-daemon -p $PYWWSPID $WEATHERDATA $PYWWSLOG stop &
+  echo `date +"%Y-%m-%d %H:%M:%S"`":Stopping PYWWS" >> $PYWWSLOG
+fi
+
+#
+# SCRIPT TO UPDATE PYWWS SERVICE STATUS
+#
+if [[ $PYWWSSTATUS == "yes" ]]
+then
+  mysql -uweather -p$DBPASSWD -ss weather -e "UPDATE cron SET cron_run='$CRONDATE' WHERE cron_name='pywws_status'"
+  sudo $WEATHER_LOCATION/pi-scripts/status > $WEATHER_LOCATION/pi-scripts/status.dat
+  sudo chown weather:weather $WEATHER_LOCATION/public_html/data/*
+fi
+
+#
+# CHECK FOR PYWWS CRASH STATUS AND RESTART IF REQUIRED
+#
+
+if [[ $PYWWSCRASH == "yes"  &&  $PYWWSCRASHSTATUS == "stopped" ]]
+then
+  mysql -uweather -p$DBPASSWD -ss weather -e "UPDATE cron SET cron_run='$CRONDATE' WHERE cron_name='pywws_crash'"
+  /usr/local/bin/pywws-livelog-daemon -p $PYWWSPID $WEATHERDATA $PYWWSLOG start &
+  echo `date +"%Y-%m-%d %H:%M:%S"`":Starting PYWWS After Crash" >> $PYWWSLOG
+  CRONDATE=`date +"%Y-%m-%d %H:%M:%S"`
+  mysql -uweather -p$DBPASSWD -ss weather -e "UPDATE cron SET cron_run='$CRONDATE' WHERE cron_name='pywws_status'"
+  sudo $WEATHER_LOCATION/pi-scripts/status > $WEATHER_LOCATION/pi-scripts/status.dat
+  sudo chown weather:weather $WEATHER_LOCATION/public_html/data/*
+fi
+
+#
+# SCRIPT TO UPDATE RASPIWEATHER REMOTE SITE
+#
+if [[ $PYWWSREMOTE == "yes" ]]
+then
+## RUN PHP SCRIPT TO PUSH TO REMOTE SITE
+	REMOTECOUNT=$(cat $WEATHER_LOCATION/pi-scripts/remote.dat)
+	if [[ $REMOTECOUNT == "0" ]]
+	then
+		cd $WEATHER_LOCATION/pi-scripts/
+		/usr/bin/php remotepush.php
+		echo "1" > $WEATHER_LOCATION/pi-scripts/remote.dat
+	elif [[ $REMOTECOUNT == "4" ]]
+	then
+		echo "0" > $WEATHER_LOCATION/pi-scripts/remote.dat
+	else
+		NEWCOUNT=$(expr $REMOTECOUNT + 1)
+		echo $NEWCOUNT > $WEATHER_LOCATION/pi-scripts/remote.dat
+	fi
+fi

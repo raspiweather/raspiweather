@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#RASPBERRY PI RESOURCE INFORMATION SCRIPT
+#CUSTOM WRITTEN FOR JSON OUTPUT BY BEN JACKSON
+
+#GET CPU IDLE PERCENTAGE
+cpu=`mpstat | grep all | awk '{print "\"cpuidle\":\""$11"\","}'`
+#GET MEMORY INFORMATION
+memory=`free -h | grep Mem | awk '{print "\"memtotal\":\""$2"\",\"memused\":\""$3"\",\"memfree\":\""$4"\","}'`
+#GET TEMPERATURE INFORMATION
+temperature=`/opt/vc/bin/vcgencmd measure_temp | cut -d '=' -f2 | awk '{print "\"temperature\":\""$1"\","}'`
+#GET VOLTAGE INFORMATION
+voltages=""
+for id in core sdram_c sdram_p ; do voltages+=`echo "\"$id$(/opt/vc/bin/vcgencmd measure_volts $id | cut -d '=' -f2 | awk '{print "volts\":\""$1"\","}')"` ; done
+#GET DISK USAGE INFORMATION
+directorylist=`df -h | grep -v Filesystem | awk '{print "{\"name\":\""$1"\",\"size\":\""$2"\",\"used\":\""$3"\",\"free\":\""$4"\"},"}'`
+directorylist=`echo $directorylist | head -c -2`
+echo "{"$cpu$memory$temperature$voltages"\"dirs\":["$directorylist"]}"

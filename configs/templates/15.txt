@@ -1,0 +1,20 @@
+#hourly#
+#timezone local#
+#roundtime True#
+{"colors":[{"color":"0073b7"},{"color":"3d9970"},{"color":"3d39a0"}],
+"charttype":{"polar":"false","type":"spline"},
+"options":{
+"stacking":"",
+"labels":"",
+"chartheight":"350px",
+"pointpadding":0.2,
+"yaxis":[{"title":"Temperature \\u00B0C"}],
+"seriestype":[{"name":"Temp In","type":"spline","valuesuffix":"\\u00B0C"},{"name":"Temp Out","type":"spline","valuesuffix":"\\u00B0C"},{"name":"Apparent Temp","type":"spline","valuesuffix":"\\u00B0C"}]},
+"values":[
+#jump 0#
+#loop 28#
+{"time":"#idx "%H%M %d/%b"#","Temp In":#temp_in "%.1f" "-"#,"Temp Out":#temp_out "%.1f" "-"#,"Apparent Temp":#calc "apparent_temp(data['temp_out'], data['hum_out'], data['wind_ave'])" "%.1f" "-"#},
+#jump -6#
+#endloop#
+{"time":"#idx "%H%M %d/%b"#","Temp In":#temp_in "%.1f" "-"#,"Temp Out":#temp_out "%.1f" "-"#,"Apparent Temp":#calc "apparent_temp(data['temp_out'], data['hum_out'], data['wind_ave'])" "%.1f" "-"#}
+]}

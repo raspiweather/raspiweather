@@ -1,0 +1,37 @@
+#!/bin/bash
+
+###edit the following
+pidfile=/var/run/pywws.pid
+
+service=pywws
+###stop editing
+
+DATE=$(date +"%Y-%m-%d %H:%M:%S:")
+if (( $(ps -ef | grep -v grep | grep $service | wc -l) > 0 ))
+then
+  echo '{"date":"'$DATE'","state":"running"}' # >> $logfile &
+else
+  if [ -e $pidfile ]
+  then
+  #rm $pidfile
+    echo '{"date":"'$DATE'","state":"stopped"}' # >> $logfile &
+  else
+echo '{"date":"'$DATE'","state":"stopped"}' # >> $logfile &
+ 
+# /etc/init.d/$service start
+# if (( $(ps -ef | grep -v grep | grep $service | wc -l) > 0 ))
+# then
+#  log=/var/log/log-weather
+#  tail -40 $logfile > $log
+#  subject="Weather station has been started"
+#  cat $log | mutt -s "Weather station has been started" ben@hulkperformance.com boggle561uppity@m.facebook.com
+#  rm $log
+#  echo "$DATE Starting Weather via AUTO script" >> $logfile &
+# else
+#  subject="Weather station is not running"
+#  log=/var/log/log-weather
+#  tail -40 $logfile > $log
+#  cat $log | mutt -s "Weather station is not running" ben@hulkperformance.com boggle561uppity@m.facebook.com
+#  rm $log
+  fi
+fi

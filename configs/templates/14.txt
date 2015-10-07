@@ -1,0 +1,16 @@
+#raw#
+#timezone local#
+#roundtime True#
+<td>#idx "%d-%b-%Y %I:%M%P"#</td>
+<td>#temp_out "%.1f" "-"#</td>
+<td>#calc "apparent_temp(data['temp_out'], data['hum_out'], data['wind_ave'])" "%.1f "#</td>
+<td>#calc "dew_point(data['temp_out'], data['hum_out'])" "%.1f "#</td>
+<td>#hum_out "%d"#</td>
+<td>#wind_dir "%s " "-" "wind_dir_text[x]"#</td>
+<td>#wind_ave "%.0f " "-" "x * 3.6"#</td>
+<td>#wind_gust "%.0f " "" "x * 3.6"#</td>
+<td>#rel_pressure "%.0f "#</td>
+#daily#
+<td>#rain "%.1f "#</td>
+<td>#temp_out_min "%.1f "#<br /><small>#temp_out_min_t "%I:%M%P"#</small></td>
+<td>#temp_out_max "%.1f "#<br /><small>#temp_out_max_t "%I:%M%P"#</small></td>

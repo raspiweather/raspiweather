@@ -1,0 +1,20 @@
+#timezone local#
+#roundtime True#
+#hourly#
+{"colors":[{"color":"0073b7"},{"color":"3d9970"},{"color":"3d39a0"}],
+"charttype":{"polar":"false","type":"spline"},
+"options":{
+"stacking":"",
+"labels":"",
+"chartheight":"350px",
+"pointpadding":0.2,
+"yaxis":[{"title":"Speed (KPH)"}],
+"seriestype":[{"name":"Wind Average","type":"spline","valuesuffix":"KPH"},{"name":"Wind Gust","type":"spline","valuesuffix":"KPH"}]},
+"values":[
+#jump 0#
+#loop 24#
+{"time":"#idx "%H%M %d/%b"#","Wind Average":#wind_ave "%.1f" "" "wind_kmph(x)"#,"Wind Gust":#wind_gust "%.1f" "" "wind_kmph(x)"#},
+#jump -1#
+#endloop#
+{"time":"#idx "%H%M %d/%b"#","Wind Average":#wind_ave "%.1f" "" "wind_kmph(x)"#,"Wind Gust":#wind_gust "%.1f" "" "wind_kmph(x)"#}
+]}
