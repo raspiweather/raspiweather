@@ -37,11 +37,6 @@ sudo apt-get update
 sudo apt-get install python-pip sysstat php-pear
 sudo apt-get install nginx php5-fpm php5-mysql php5-curl git
 ```
-If you get an error (E: Problem with MergeList /var/lib/dpkg/status) with apt-get update on raspbian, try the following
-```
-sudo rm /var/lib/dpkg/status
-sudo touch /var/lib/dpkg/status
-```
 
 2. Install MySQL
 ```
