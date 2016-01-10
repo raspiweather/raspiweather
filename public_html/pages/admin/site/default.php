@@ -1,4 +1,4 @@
-<?php 
+<?php
 if(isset($_SESSION['user_id'])) {
 
 $dbh = new PDO("mysql:host=".$database['host'].";dbname=".$database['name'], $database['user'], $database['pass']);
@@ -19,7 +19,7 @@ $cron_value = $stmt->fetchAll();
         <h3 class="box-title">Site Configuration</h3>
       </div><!-- /.box-header -->
       <div class="box-body">
-        <form role="form" method="post" action="handler.php">    
+        <form role="form" method="post" action="handler.php">
           <input type="hidden" name="action" value="<?php echo $action; ?>">
           <input type="hidden" name="page" value="<?php echo $page; ?>">
           <div class="form-group">
@@ -47,7 +47,7 @@ $cron_value = $stmt->fetchAll();
         <h4>Note:</h4>
         <p>Set your API Key and URL end point here (separate additional keys and urls by commas)<br>Update interval is every 5 minutes</p>
         </div>
-        <form role="form" method="post" action="handler.php">    
+        <form role="form" method="post" action="handler.php">
           <input type="hidden" name="action" value="<?php echo $action; ?>">
           <input type="hidden" name="page" value="<?php echo $page; ?>">
           <div class="form-group">
@@ -65,7 +65,32 @@ $cron_value = $stmt->fetchAll();
 	    </div>
 	  </div>
           <div class="form-group">
-            <button type="submit" class="btn btn-primary" name="remote"><i class="fa fa-save"></i> Submit</button>
+            <button type="submit" class="btn btn-primary" name="refresh"><i class="fa fa-save"></i> Submit</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div><!-- /.col -->
+
+<!-- right column -->
+  <div class="col-md-6">
+  <!-- general form elements -->
+    <div class="box box-solid box-primary">
+      <div class="box-header">
+        <h3 class="box-title">Dashboard Refresh</h3>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <form role="form" method="post" action="handler.php">
+          <input type="hidden" name="action" value="<?php echo $action; ?>">
+          <input type="hidden" name="page" value="<?php echo $page; ?>">
+          <div class="form-group">
+            <label>Site Refresh Interval (Seconds) - Enter 0 to disable</label>
+            <input type="text" class="form-control" name="site_refresh" placeholder="0" value="<?php echo $site_array['site_refresh']; ?>">
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary" name="submit"><i class="fa fa-save"></i> Submit</button>
           </div>
         </form>
 
