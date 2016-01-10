@@ -97,7 +97,8 @@ INSERT INTO `site_info` (`site_item`, `site_value`) VALUES
 ('site_name', 'RasPiWeather'),
 ('site_colour', '#438F8A'),
 ('site_api', '6980bbacd6239f97428f6d97d5fda2688e74cf162fa78089b01766fc003d80bd'),
-('site_remote', 'raspiweather.com');
+('site_remote', 'raspiweather.com'),
+('site_refresh', '0');
 UNLOCK TABLES;
 
 LOCK TABLES `widgets` WRITE;

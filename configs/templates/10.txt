@@ -18,8 +18,8 @@
 #loop 7#
   <tr>
     <td>#idx "%Y/%m/%d"#</td>
-    <td>#temp_out_max "%.1f<small>°C</small>"#</td>
-    <td>#temp_out_min "%.1f<small>°C</small>"#</td>
+    <td>#temp_out_max "%.1f<i class="wi-celcius"></i>"#</td>
+    <td>#temp_out_min "%.1f<i class="wi-celcius"></i>"#</td>
     <td class="hidden-xs">#wind_dir "%s" "-" "winddir_text(x)"#</td>
     <td>#wind_ave "%.0f <small>mph</small>" "" "wind_mph(x)"#</td>
     <td class="hidden-xs">#wind_gust "%.0f <small>mph</small>" "" "wind_mph(x)"#</td>
