@@ -86,7 +86,7 @@ Also make sure that any other web servers running are either not using port 80 o
 7. Modify configs/configuration.php with the database password from step 3 and installation directory
 
   ```
-  nano configuration.php
+  nano configs/configuration.php
   ```
   ```
   $database['host'] = "localhost";
