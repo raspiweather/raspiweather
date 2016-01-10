@@ -65,7 +65,7 @@ $cron_value = $stmt->fetchAll();
 	    </div>
 	  </div>
           <div class="form-group">
-            <button type="submit" class="btn btn-primary" name="refresh"><i class="fa fa-save"></i> Submit</button>
+            <button type="submit" class="btn btn-primary" name="remote"><i class="fa fa-save"></i> Submit</button>
           </div>
         </form>
 
@@ -90,7 +90,7 @@ $cron_value = $stmt->fetchAll();
           </div>
 
           <div class="form-group">
-            <button type="submit" class="btn btn-primary" name="submit"><i class="fa fa-save"></i> Submit</button>
+            <button type="submit" class="btn btn-primary" name="refresh"><i class="fa fa-save"></i> Submit</button>
           </div>
         </form>
 
