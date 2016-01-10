@@ -61,7 +61,13 @@ echo "Install PHP configuration ================================================
 cp $INSTALL_LOCATION/configs/raspiweather.pool /etc/php5/fpm/pool.d/www.conf
 cp $INSTALL_LOCATION/configs/raspiweather.phpini /etc/php5/fpm/php.ini
 echo "Install Nginx configuration ====================================================="
-cp $INSTALL_LOCATION/configs/raspiweather.nginx /etc/nginx/sites-available/raspiweather
+JESSIE=$(cat /etc/*-release | grep "jessie")
+if [ -z "$JESSIE" ]
+then
+  cp $INSTALL_LOCATION/configs/raspiweather.nginx /etc/nginx/sites-available/raspiweather
+else
+  cp $INSTALL_LOCATION/configs/raspiweather.nginx-jessie /etc/nginx/sites-available/raspiweather
+fi
 echo "Remove default Nginx configuration =============================================="
 DEFAULTNGINX="/etc/nginx/sites-enabled/default"
 [[ -f "$DEFAULTNGINX" ]] && rm -f "$DEFAULTNGINX"
