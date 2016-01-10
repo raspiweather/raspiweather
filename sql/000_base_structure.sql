@@ -88,7 +88,7 @@ LOCK TABLES `settings` WRITE;
 INSERT INTO `settings` (`setting_item`, `setting_value`) VALUES
 ('templates', '/apps/weather/templates'),
 ('user_calib', '/apps/weather/calib'),
-('work', '/tmp/weather'),
+('work', '/apps/weather/tmp'),
 ('local_files', '/apps/weather/public_html/data');
 UNLOCK TABLES;
 
@@ -124,7 +124,7 @@ INSERT INTO `cron` (`cron_name`, `cron_value`) VALUES
 UNLOCK TABLES;
 
 LOCK TABLES `templates` WRITE;
-INSERT INTO `templates` VALUES 
+INSERT INTO `templates` VALUES
 (4,'logged','Overview - Last 1 Hour',0,'4',1,0,1),
 (5,'hourly','Wind - 24 Hours',2,'5',1,0,2),
 (6,'hourly','Temperature - Last 24 Hours',2,'6',1,0,1),

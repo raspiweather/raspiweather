@@ -102,7 +102,7 @@ Also make sure that any other web servers running are either not using port 80 o
   INSERT INTO `settings` (`setting_item`, `setting_value`) VALUES
   ('templates', '<INSTALLDIR>/templates'),
   ('user_calib', '<INSTALLDIR>/calib'),
-  ('work', '/tmp/weather'),
+  ('work', '<INSTALLDIR>/tmp'),
   ('local_files', '<INSTALLDIR>/public_html/data');
   ```
 
