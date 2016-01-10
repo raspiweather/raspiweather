@@ -39,7 +39,7 @@ Also make sure that any other web servers running are either not using port 80 o
 
   ```
   sudo apt-get update
-  sudo apt-get install python-pip sysstat php-pear nginx php5-fpm php5-mysql php5-curl git
+  sudo apt-get install python-pip sysstat php-pear nginx php5-fpm php5-mysql php5-curl git python-usb
   ```
 
 2. Install MySQL
