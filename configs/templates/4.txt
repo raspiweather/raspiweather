@@ -21,9 +21,9 @@
 #loop 12#
 <tr>
 <td>#idx "%H:%M <small>%Z</small>"#</td>
-<td>#temp_out "%.1f<small>°C</small>" "-"#</td>
-<td class="hidden-xs">#temp_in "%.1f<small>°C</small>" "-"#</td>
-<td>#calc "apparent_temp(data['temp_out'], data['hum_out'], data['wind_ave'])" "%.1f <small>°C</small>"#</td>
+<td>#temp_out "%.1f<i class="wi-celcius"></i>" "-"#</td>
+<td class="hidden-xs">#temp_in "%.1f<i class="wi-celcius"></i>" "-"#</td>
+<td>#calc "apparent_temp(data['temp_out'], data['hum_out'], data['wind_ave'])" "%.1f <i class="wi-celcius"></i>"#</td>
 <td class="hidden-xs">#hum_out "%d<small>%%</small>"#</td>
 <td class="hidden-xs">#wind_dir "%s " "-" "winddir_text(x)"#</td>
 <td>#wind_ave "%.0f <small>mph</small>" "-" "wind_mph(x)"#</td>

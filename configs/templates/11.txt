@@ -15,12 +15,12 @@
 #loop 12#
   <tr>
     <td>#start "%B %Y"#</td>
-    <td>#temp_out_max_hi "%.1f <small>°C</small>"#</td>
-    <td class="hidden-xs">#temp_out_max_ave "%.1f <small>°C</small>"#</td>
-    <td>#temp_out_max_lo "%.1f <small>°C</small>"#</td>
-    <td class="hidden-xs">#temp_out_min_hi "%.1f <small>°C</small>"#</td>
-    <td class="hidden-xs">#temp_out_min_ave "%.1f <small>°C</small>"#</td>
-    <td>#temp_out_min_lo "%.1f <small>°C</small>"#</td>
+    <td>#temp_out_max_hi "%.1f <i class="wi-celcius"></i>"#</td>
+    <td class="hidden-xs">#temp_out_max_ave "%.1f <i class="wi-celcius"></i>"#</td>
+    <td>#temp_out_max_lo "%.1f <i class="wi-celcius"></i>"#</td>
+    <td class="hidden-xs">#temp_out_min_hi "%.1f <i class="wi-celcius"></i>"#</td>
+    <td class="hidden-xs">#temp_out_min_ave "%.1f <i class="wi-celcius"></i>"#</td>
+    <td>#temp_out_min_lo "%.1f <i class="wi-celcius"></i>"#</td>
     <td>#rain "%0.1f <small>mm</small>"#</td>
   </tr>
 #jump -1#
