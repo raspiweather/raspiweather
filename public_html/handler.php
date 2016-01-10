@@ -454,7 +454,7 @@ if ($remote['is_remote'] != True)
 
           $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
           $stmt = $dbh->prepare("UPDATE site_info SET site_value=:site_refresh WHERE site_item='site_refresh'");
-          $stmt->bindParam(':site_remote', $site_remote, PDO::PARAM_STR);
+          $stmt->bindParam(':site_refresh', $site_refresh, PDO::PARAM_STR);
           $stmt->execute();
         }
 
