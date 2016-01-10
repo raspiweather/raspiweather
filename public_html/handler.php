@@ -452,6 +452,8 @@ if ($remote['is_remote'] != True)
         elseif (isset($_POST['refresh'])) {
           $dbh = new PDO("mysql:host=".$database['host'].";dbname=".$database['name'], $database['user'], $database['pass']);
 
+          $site_refresh=$_POST['site_refresh'];
+          
           $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
           $stmt = $dbh->prepare("UPDATE site_info SET site_value=:site_refresh WHERE site_item='site_refresh'");
           $stmt->bindParam(':site_refresh', $site_refresh, PDO::PARAM_STR);
