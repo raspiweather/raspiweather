@@ -8,7 +8,11 @@
 #roundtime True#
 {"time":"#idx "%d-%b-%Y %H:%M "#","widgets":{"temp_out":"#temp_out "%.1f" "-"#","temp_in":"#temp_in "%.1f" "-"#","apparent_temp":"#calc "apparent_temp(data['temp_out'], data['hum_out'], data['wind_ave'])" "%.1f" "-"#","hum_out":"#hum_out "%.1f" "-"#","hum_in":"#hum_in "%.1f" "-"#","abs_pressure":"#abs_pressure "%.1f" "-"#","wind_ave":"#wind_ave "%.1f" "" "wind_kmph(x)"#","wind_gust":"#wind_gust "%.1f" "" "wind_kmph(x)"#","wind_dir":"#wind_dir "%s " "-" "wind_dir_text[x]"#","rain":"#rain "%.1f" "-"#"}}
 */
-
+//PAGE REFRESH
+if (intval($site_array['site_refresh']) > 0) {
+echo "<meta http-equiv='refresh' content='".$site_array['site_refresh']."'>";
+}
+//
 $contents = file_get_contents($settings_array['local_files']."/widgets.txt", true);
 
 $widget_array = json_decode($contents, true);
@@ -32,7 +36,7 @@ $c=0;
 
 for ($a = 0; $a <= count($widget_db_array)-1; $a++) {
   $b=0;
-  foreach($widget_array['widgets'] as $key => $value) {    
+  foreach($widget_array['widgets'] as $key => $value) {
     if ($key == $widget_db_array[$a]['widget_name'] && $widget_db_array[$a]['active'] != 0){
         if ($c == 4){
           ?>
@@ -43,7 +47,7 @@ for ($a = 0; $a <= count($widget_db_array)-1; $a++) {
         if ($c == 0){
           ?>
           <div class="row">
-          <?php          
+          <?php
         }
         ?>
           <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -55,7 +59,7 @@ for ($a = 0; $a <= count($widget_db_array)-1; $a++) {
               <div class="icon"><i class="<?php echo $widget_db_array[$a]['widget_icon']; ?>"></i></div>
               <div class="small-box-footer"><?php echo $widget_array['time']; ?></div>
             </div>
-          </div>          
+          </div>
         <?php
         if ($b == count($widget_array['widgets']) - 1){
           ?>
@@ -66,6 +70,6 @@ for ($a = 0; $a <= count($widget_db_array)-1; $a++) {
         $c=$c+1;
       }
       $b++;
-    }    
+    }
   }
 ?>

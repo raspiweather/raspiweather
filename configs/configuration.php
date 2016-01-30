@@ -10,6 +10,8 @@ $weather_folder['data'] = $weather_folder['install']."/weather_data";
 $weather_folder['logs'] = $weather_folder['install']."/logs";
 $weather_folder['scripts'] = $weather_folder['install']."/pi-scripts";
 
+$remote['is_remote'] = False;
+
 $dbh = new PDO("mysql:host=".$database['host'].";dbname=".$database['name'], $database['user'], $database['pass']);
 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $stmt = $dbh->prepare("SELECT * FROM site_info");

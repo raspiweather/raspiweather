@@ -13,12 +13,12 @@
   </tr>
   <tr>
     <th align="right">Daytime max temp</th>
-    <td>#temp_out_max "%.1f<small>°C</small>"#</td>
+    <td>#temp_out_max "%.1f<i class="wi-celcius"></i>"#</td>
     <td>#temp_out_max_t "%Y/%m/%d</td><td>%H:%M <small>%Z</small>"#</td>
   </tr>
   <tr>
     <th align="right">Night min temp</th>
-    <td>#temp_out_min "%.1f<small>°C</small>"#</td>
+    <td>#temp_out_min "%.1f<i class="wi-celcius"></i>"#</td>
     <td>#temp_out_min_t "%Y/%m/%d</td><td>%H:%M <small>%Z</small>"#</td>
   </tr>
   <tr>
