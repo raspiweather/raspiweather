@@ -3,7 +3,7 @@ $contents = file_get_contents($settings_array['local_files']."/forecast.txt", tr
 
 $forecast= json_decode($contents, true);
 
-$forecast_icons= json_decode('{"A":"wi-day-sunny","B":"wi-day-sunny","C":"wi-day-overcast","D":"wi-day-showers","E":"wi-day-rain","F":"wi-day-cloudy","G":"wi-day-rain-mix","H":"wi-night-showers","I":"wi-day-showers","J":"wi-day-cloudy","K":"wi-day-rain","L":"wi-cloudy","M":"wi-cloudy","N":"wi-rain","O":"wi-showers","P":"wi-showers","Q":"wi-storm-showers","R":"wi-night-showers","S":"wi-storm-showers","T":"wi-thunderstorm","U":"wi-rain","V":"wi-thunderstorm","W":"wi-rain","X":"wi-thunderstorm","Y":"wi-thunderstorm","Z":"wi-thunderstorm"}', true);
+$forecast_icons= json_decode('{"A":"wi-day-sunny","B":"wi-day-sunny","C":"wi-day-sunny-overcast","D":"wi-day-showers","E":"wi-day-rain","F":"wi-day-cloudy","G":"wi-day-rain-mix","H":"wi-night-showers","I":"wi-day-showers","J":"wi-day-cloudy","K":"wi-day-rain","L":"wi-cloudy","M":"wi-cloudy","N":"wi-rain","O":"wi-showers","P":"wi-showers","Q":"wi-storm-showers","R":"wi-night-showers","S":"wi-storm-showers","T":"wi-thunderstorm","U":"wi-rain","V":"wi-thunderstorm","W":"wi-rain","X":"wi-thunderstorm","Y":"wi-thunderstorm","Z":"wi-thunderstorm"}', true);
 
 /*
 //THIS LINE ONLY TO GO INTO THE FORECAST TEMPLATE
