@@ -1,3 +1,9 @@
+NOTICE:
+www.raspiweather.com infrastructure is going to be turned off. If you use it, sorry. I can't justify paying for a service that I've stopped using for the time being.
+
+I will possibly bring this back at some stage as I am working on a new set of software that doesn't use PyWWS, and should be even easier to set up and run.
+
+
 RasPiWeather
 ==============
 RasPiWeather is a webfront end for PYWWS weather station software written by Jim Easterbrook.<br>
